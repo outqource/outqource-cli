@@ -40,30 +40,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var yargs = require("yargs");
 var checkNodeVersion_1 = require("./checkNodeVersion");
 var utils_1 = require("./utils");
-(0, checkNodeVersion_1.default)();
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var options, _a, name_1, path, newPath;
     return __generator(this, function (_b) {
         switch (_b.label) {
-            case 0: return [4 /*yield*/, yargs
-                    .usage("\n\tOutqource CLI for js/ts library\" \\\n\tUsage: npx outqource \\\n\t-t --template <template> \\\n\t-s --stack <stack> \\\n\t-n --name <name>\n")
-                    .options({
-                    stack: {
-                        alias: "s",
-                        describe: "Stack to use",
-                        type: "string",
-                    },
-                    template: {
-                        alias: "t",
-                        describe: "Template to use",
-                        type: "string",
-                    },
-                    name: {
-                        alias: "n",
-                        describe: "Name of the project",
-                        type: "string",
-                    },
-                }).argv];
+            case 0:
+                // Check node version
+                (0, checkNodeVersion_1.default)();
+                return [4 /*yield*/, yargs
+                        .usage("\n\tOutqource CLI for js/ts library\" \\\n\tUsage: npx outqource \\\n\t-t --template <template> \\\n\t-s --stack <stack> \\\n\t-n --name <name> \\\n\t-b --branch <branch> \\\n")
+                        .options({
+                        stack: {
+                            alias: "s",
+                            describe: "Stack to use",
+                            type: "string",
+                        },
+                        template: {
+                            alias: "t",
+                            describe: "Template to use",
+                            type: "string",
+                        },
+                        name: {
+                            alias: "n",
+                            describe: "Name of the project",
+                            type: "string",
+                        },
+                        branch: {
+                            alias: "b",
+                            describe: "Branch to use",
+                            type: "string",
+                            default: "dev",
+                        },
+                    }).argv];
             case 1:
                 options = _b.sent();
                 if (!options.stack || !options.template) {
@@ -81,7 +89,7 @@ var utils_1 = require("./utils");
                         orgainzation: "outqource",
                         repository: "outqource-template",
                         projectName: name_1,
-                        branch: "dev",
+                        branch: options.branch,
                         path: path,
                         newPath: newPath,
                     });

@@ -1,15 +1,15 @@
 {
   "name": "outqource-cli",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "main": "bin/index.js",
+  "bin": {
+    "outqource-cli": "bin/index.js"
+  },
   "license": "MIT",
   "private": false,
   "author": {
     "email": "contact@alpox.dev",
     "name": "AlpoxDev"
-  },
-  "bin": {
-    "outqource-cli": "bin/index.js"
   },
   "scripts": {
     "test": "rm -rf template && yarn build && npm i -g",
