@@ -41,7 +41,7 @@ var yargs = require("yargs");
 var checkNodeVersion_1 = require("./checkNodeVersion");
 var utils_1 = require("./utils");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var options, _a, name_1, path, newPath;
+    var options, _a, path, newPath;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -64,6 +64,7 @@ var utils_1 = require("./utils");
                             alias: "n",
                             describe: "Name of the project",
                             type: "string",
+                            default: "outqource-template",
                         },
                         branch: {
                             alias: "b",
@@ -80,15 +81,13 @@ var utils_1 = require("./utils");
                 }
                 try {
                     _a = (function () {
-                        var _a;
-                        var name = (_a = options.name) !== null && _a !== void 0 ? _a : "outqource";
-                        var pathArray = [name, options.stack, options.template];
-                        return [name, pathArray.join("/"), pathArray.join("-")];
-                    })(), name_1 = _a[0], path = _a[1], newPath = _a[2];
+                        var pathArray = [options.name, options.stack, options.template];
+                        return [pathArray.join("/"), pathArray.join("-")];
+                    })(), path = _a[0], newPath = _a[1];
                     (0, utils_1.getSubdirectoryFromGithub)({
                         orgainzation: "outqource",
                         repository: "outqource-template",
-                        projectName: name_1,
+                        projectName: options.name,
                         branch: options.branch,
                         path: path,
                         newPath: newPath,
