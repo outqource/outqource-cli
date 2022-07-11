@@ -16,7 +16,8 @@ import { getSubdirectoryFromGithub } from "./utils";
 	Usage: npx outqource \\
 	-t --template <template> \\
 	-s --stack <stack> \\
-	-n --name <name>
+	-n --name <name> \\
+	-b --branch <branch> \\
 `
     )
     .options({
