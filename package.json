@@ -1,0 +1,34 @@
+{
+  "name": "outqource-cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "author": {
+    "email": "contact@alpox.dev",
+    "name": "AlpoxDev"
+  },
+  "bin": {
+    "outqource-cli": "bin/index.js"
+  },
+  "scripts": {
+    "test": "rm -rf template && yarn build && npm i -g",
+    "start": "bin/index.js",
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^9.3.0",
+    "fs-extra": "^10.1.0",
+    "yargs": "^17.5.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.0.3",
+    "@types/yargs": "^17.0.10",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4"
+  }
+}
