@@ -35,6 +35,7 @@ import { getSubdirectoryFromGithub } from "./utils";
         alias: "n",
         describe: "Name of the project",
         type: "string",
+        default: "outqource-template",
       },
       branch: {
         alias: "b",
@@ -50,16 +51,15 @@ import { getSubdirectoryFromGithub } from "./utils";
   }
 
   try {
-    const [name, path, newPath] = (() => {
-      const name = options.name ?? "outqource";
-      const pathArray = [name, options.stack, options.template];
-      return [name, pathArray.join("/"), pathArray.join("-")];
+    const [path, newPath] = (() => {
+      const pathArray = [options.name, options.stack, options.template];
+      return [pathArray.join("/"), pathArray.join("-")];
     })();
 
     getSubdirectoryFromGithub({
       orgainzation: "outqource",
       repository: "outqource-template",
-      projectName: name,
+      projectName: options.name,
       branch: options.branch,
       path,
       newPath,
