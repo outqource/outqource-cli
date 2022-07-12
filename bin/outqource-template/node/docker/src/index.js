@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -37,68 +36,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("./console");
-var yargs = require("yargs");
-var chalk = require("chalk");
-var checkNodeVersion_1 = require("./checkNodeVersion");
-var utils_1 = require("./utils");
+var express_1 = require("express");
+var body_parser_1 = require("body-parser");
+var app_1 = require("./app");
+var index_1 = require("./config/index");
+var database_1 = require("database");
+var jwtUserCallback_1 = require("middlewares/jwtUserCallback");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var options, _a, path, newPath;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                // Check node version
-                (0, checkNodeVersion_1.default)();
-                return [4 /*yield*/, yargs
-                        .usage(chalk.cyan("\n\tOutqource CLI for js/ts library\" \\\n\tUsage: npx outqource \\\n\t-t --template <template> \\\n\t-s --stack <stack> \\\n\t-n --name <name> \\\n\t-b --branch <branch> \\\n"))
-                        .options({
-                        stack: {
-                            alias: "s",
-                            describe: "Stack to use",
-                            type: "string",
-                        },
-                        template: {
-                            alias: "t",
-                            describe: "Template to use",
-                            type: "string",
-                        },
-                        name: {
-                            alias: "n",
-                            describe: "Name of the project",
-                            type: "string",
-                            default: "outqource-template",
-                        },
-                        branch: {
-                            alias: "b",
-                            describe: "Branch to use",
-                            type: "string",
-                            default: "dev",
-                        },
-                    }).argv];
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, database_1.default.$connect()];
             case 1:
-                options = _b.sent();
-                if (!options.stack || !options.template) {
-                    console.red("Please provide a template and stack");
-                    process.exit(1);
-                }
-                try {
-                    _a = (function () {
-                        var pathArray = [options.name, options.stack, options.template];
-                        return [pathArray.join("/"), pathArray.join("-")];
-                    })(), path = _a[0], newPath = _a[1];
-                    (0, utils_1.getSubdirectoryFromGithub)({
-                        orgainzation: "outqource",
-                        repository: "outqource-template",
-                        projectName: options.name,
-                        branch: options.branch,
-                        src: path,
-                        dest: newPath,
-                    });
-                }
-                catch (error) {
-                    console.error(error);
-                    process.exit(1);
-                }
+                _a.sent();
+                return [4 /*yield*/, app_1.default.init()];
+            case 2:
+                _a.sent();
+                console.log('⭐️ OpenAPI created!');
+                app_1.default.app.use(express_1.default.json({ limit: '50mb' }));
+                app_1.default.app.use(express_1.default.urlencoded({ limit: '50mb' }));
+                app_1.default.app.use(body_parser_1.default.json({ limit: '50mb' }));
+                app_1.default.app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
+                app_1.default.middlewares([], { jwtUserCallback: jwtUserCallback_1.default });
+                app_1.default.routers({
+                    globalOptions: {
+                        html: '<h1>Medis 0.0.1</h1>',
+                        status: 200,
+                    },
+                });
+                app_1.default.app.listen(index_1.default.PORT, function () {
+                    console.log("\uD83D\uDE80 Sever Listening on ".concat(index_1.default.PORT, "..."));
+                });
                 return [2 /*return*/];
         }
     });

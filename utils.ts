@@ -1,13 +1,14 @@
 import * as fs from "fs-extra";
 import { execSync } from "child_process";
+import { execa } from "execa";
 
 interface IGetSubdirectoriesFromGithub {
   orgainzation: string;
   repository: string;
   projectName: string;
   branch: string;
-  path: string;
-  newPath: string;
+  src: string;
+  dest: string;
 }
 
 export const checkFolder = (path: string | string[]): boolean => {
@@ -31,19 +32,26 @@ export const getSubdirectoryFromGithub = ({
   repository,
   projectName,
   branch,
-  path,
-  newPath,
+  src,
+  dest,
 }: IGetSubdirectoriesFromGithub) => {
-  execSync(
-    `git clone https://github.com/${orgainzation}/${repository} ${projectName}`
-  );
-  execSync(`cd ${projectName} && git checkout ${branch} && cd ../`);
+  try {
+    execSync(
+      `git clone https://github.com/${orgainzation}/${repository} ${projectName}`
+    );
+    execSync(`cd ${projectName} && git checkout ${branch} && cd ../`);
 
-  const isExist = checkFolder(path);
-  if (!isExist) {
-    throw new Error("Cannot find path in project");
+    const isExist = checkFolder(src);
+    if (!isExist) {
+      throw new Error("Cannot find path in project");
+    }
+
+    moveFolder(src, dest);
+    removeFolder(projectName);
+  } catch (e) {
+    const error = e as any;
+    console.red(error?.message || "Unknown error");
+
+    process.exit(1);
   }
-
-  moveFolder(path, newPath);
-  removeFolder(projectName);
 };

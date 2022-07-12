@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
+import "./console";
 import * as yargs from "yargs";
+import * as chalk from "chalk";
 import checkNodeVersion from "./checkNodeVersion";
 import { getSubdirectoryFromGithub } from "./utils";
 
@@ -11,14 +13,14 @@ import { getSubdirectoryFromGithub } from "./utils";
   // Parse arguments
   const options = await yargs
     .usage(
-      `
-	Outqource CLI for js/ts library" \\
-	Usage: npx outqource \\
+      chalk.cyan(`
+Outqource CLI for js/ts library" \\
+Usage: npx outqource \\
 	-t --template <template> \\
 	-s --stack <stack> \\
 	-n --name <name> \\
 	-b --branch <branch> \\
-`
+`)
     )
     .options({
       stack: {
@@ -46,7 +48,7 @@ import { getSubdirectoryFromGithub } from "./utils";
     }).argv;
 
   if (!options.stack || !options.template) {
-    console.log(`Please provide a template and stack`);
+    console.red(`Please provide a template and stack`);
     process.exit(1);
   }
 
@@ -61,8 +63,8 @@ import { getSubdirectoryFromGithub } from "./utils";
       repository: "outqource-template",
       projectName: options.name,
       branch: options.branch,
-      path,
-      newPath,
+      src: path,
+      dest: newPath,
     });
   } catch (error) {
     console.error(error);
