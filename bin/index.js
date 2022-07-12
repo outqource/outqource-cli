@@ -50,7 +50,7 @@ var utils_1 = require("./utils");
                 // Check node version
                 (0, checkNodeVersion_1.default)();
                 return [4 /*yield*/, yargs
-                        .usage(chalk.cyan("\n\tOutqource CLI for js/ts library\" \\\n\tUsage: npx outqource \\\n\t-t --template <template> \\\n\t-s --stack <stack> \\\n\t-n --name <name> \\\n\t-b --branch <branch> \\\n"))
+                        .usage(chalk.cyan("\nOutqource CLI for js/ts library\" \\\nUsage: npx outqource \\\n\t-t --template <template> \\\n\t-s --stack <stack> \\\n\t-n --name <name> \\\n\t-b --branch <branch> \\\n"))
                         .options({
                         stack: {
                             alias: "s",
