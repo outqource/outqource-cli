@@ -42,13 +42,21 @@ var yargs = require("yargs");
 var chalk = require("chalk");
 var checkNodeVersion_1 = require("./checkNodeVersion");
 var utils_1 = require("./utils");
+var template_1 = require("./template");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var options, _a, path, newPath;
+    var templateInfo, options, _a, path, newPath;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 // Check node version
                 (0, checkNodeVersion_1.default)();
+                return [4 /*yield*/, (0, template_1.printTemplateInfo)()];
+            case 1:
+                templateInfo = _b.sent();
+                if (!templateInfo) {
+                    console.red("Can not get stacks and templates info");
+                    process.exit(1);
+                }
                 return [4 /*yield*/, yargs
                         .usage(chalk.cyan("\nOutqource CLI for js/ts library\" \\\nUsage: npx outqource \\\n\t-t --template <template> \\\n\t-s --stack <stack> \\\n\t-n --name <name> \\\n\t-b --branch <branch> \\\n"))
                         .options({
@@ -75,7 +83,7 @@ var utils_1 = require("./utils");
                             default: "dev",
                         },
                     }).argv];
-            case 1:
+            case 2:
                 options = _b.sent();
                 if (!options.stack || !options.template) {
                     console.red("Please provide a template and stack");

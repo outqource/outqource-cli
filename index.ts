@@ -5,10 +5,17 @@ import * as yargs from "yargs";
 import * as chalk from "chalk";
 import checkNodeVersion from "./checkNodeVersion";
 import { getSubdirectoryFromGithub } from "./utils";
+import { printTemplateInfo } from "./template";
 
 (async () => {
   // Check node version
   checkNodeVersion();
+
+  const templateInfo = await printTemplateInfo();
+  if (!templateInfo) {
+    console.red(`Can not get stacks and templates info`);
+    process.exit(1);
+  }
 
   // Parse arguments
   const options = await yargs
